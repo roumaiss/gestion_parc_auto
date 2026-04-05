@@ -1,10 +1,6 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 session_start();
 
-// 🔒 PROTECT PAGE
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../dashboard/index.php");
     exit;
@@ -20,26 +16,20 @@ $users = $stmt->fetchAll();
 
 <div class="content">
 
-<div class="table-container">
-
-    <div class="header">
-        <h2>👥 Users Management</h2>
-        <a href="add_user.php" class="btn-add">+ Ajouter un nouvel utilisateur</a>
+    <div class="page-header">
+        <h2>Gestion des Utilisateurs</h2>
+        <a href="add_user.php" class="btn-add">+ Ajouter un utilisateur</a>
     </div>
 
-    <!-- ✅ MESSAGES (FIXED LOGIC) -->
     <?php if(isset($_GET['success'])): ?>
-
         <?php if($_GET['success'] == 'created'): ?>
-            <div class="msg success">User created successfully</div>
+            <div class="msg success">✅ Utilisateur créé avec succès.</div>
         <?php elseif($_GET['success'] == 'deleted'): ?>
-            <div class="msg success">User deleted successfully</div>
+            <div class="msg success">✅ Utilisateur supprimé.</div>
         <?php endif; ?>
-
     <?php endif; ?>
-
     <?php if(isset($_GET['error'])): ?>
-        <div class="msg error">Operation failed</div>
+        <div class="msg error">❌ Opération échouée.</div>
     <?php endif; ?>
 
     <table>
@@ -49,62 +39,41 @@ $users = $stmt->fetchAll();
                 <th>Nom</th>
                 <th>Prénom</th>
                 <th>Username</th>
-                <th>Role</th>
+                <th>Rôle</th>
                 <th>Actions</th>
             </tr>
         </thead>
-
         <tbody>
             <?php if(count($users) > 0): ?>
                 <?php foreach($users as $u): ?>
                 <tr>
-
                     <td><?= $u['id_app_user'] ?></td>
-
                     <td><?= htmlspecialchars($u['nom']) ?></td>
-
                     <td><?= htmlspecialchars($u['prenom']) ?></td>
-
                     <td><?= htmlspecialchars($u['username']) ?></td>
-
-                    <!-- ROLE -->
                     <td>
-                        <?php if($u['role'] == 'admin'): ?>
-                            <span class="badge admin">Admin</span>
-                        <?php else: ?>
-                            <span class="badge user">User</span>
-                        <?php endif; ?>
+                        <span class="badge <?= $u['role'] === 'admin' ? 'admin' : 'user' ?>">
+                            <?= ucfirst($u['role']) ?>
+                        </span>
                     </td>
-
-                    <!-- ACTIONS -->
                     <td>
-                        <a href="edit_user.php?id=<?= $u['id_app_user'] ?>" class="btn-edit">
-                            Edit
-                        </a>
-
-                        <?php if(isset($_SESSION['user_id']) && $u['id_app_user'] != $_SESSION['user_id']): ?>
+                        <a href="edit_user.php?id=<?= $u['id_app_user'] ?>" class="btn-edit">✏ Modifier</a>
+                        <?php if($u['id_app_user'] != $_SESSION['user_id']): ?>
                             <a href="delete_user.php?id=<?= $u['id_app_user'] ?>"
                                class="btn-delete"
-                               onclick="return confirm('Delete user?')">
-                               Delete
-                            </a>
+                               onclick="return confirm('Supprimer cet utilisateur ?')">🗑 Supprimer</a>
                         <?php else: ?>
-                            <span class="you-badge">You</span>
+                            <span class="badge done">Vous</span>
                         <?php endif; ?>
                     </td>
-
                 </tr>
                 <?php endforeach; ?>
             <?php else: ?>
-                <tr>
-                    <td colspan="6">No users found</td>
-                </tr>
+                <tr><td colspan="6" style="text-align:center;color:#888;">Aucun utilisateur trouvé</td></tr>
             <?php endif; ?>
         </tbody>
-
     </table>
 
-</div>
 </div>
 
 <?php include('../dashboard/footer.php'); ?>

@@ -45,21 +45,65 @@ $role     = $_SESSION['role'];
         }
 
         /* ── DARK MODE ──────────────────────────────────────────── */
-        body.dark { --bg: #0d1117; --card-bg: #161b22; --text: #e6edf3; }
-        body.dark .sidebar              { background: linear-gradient(180deg,#0f3023,#1a4a33); }
-        body.dark .sidebar-link         { color: #cdd9e5; }
-        body.dark .sidebar-link:hover   { background: rgba(255,255,255,0.08); }
-        body.dark .footer               { border-color: #30363d; color: #8b949e; }
-        body.dark table                 { background: #161b22; color: #e6edf3; }
-        body.dark table th              { background: #0d3a2c; }
-        body.dark table td              { border-color: #30363d; }
-        body.dark .card,
+        body.dark {
+            --bg:      #0d1117;
+            --card-bg: #161b22;
+            --text:    #e6edf3;
+        }
+
+        /* Layout */
+        body.dark .sidebar            { background: linear-gradient(180deg,#0f3023,#1a4a33); }
+        body.dark .sidebar-link       { color: #cdd9e5; }
+        body.dark .sidebar-link:hover { background: rgba(255,255,255,0.08); }
+        body.dark .footer             { border-color: #30363d; color: #8b949e; }
+
+        /* Tables */
+        body.dark table,
         body.dark .modern-table,
-        body.dark .styled-table         { background: #161b22; color: #e6edf3; border-color: #30363d; }
-        body.dark .form-container       { background: #161b22; color: #e6edf3; }
+        body.dark .styled-table       { background: #161b22; color: #e6edf3; }
+        body.dark table th,
+        body.dark .modern-table th,
+        body.dark .styled-table th    { background: #0d3a2c; }
+        body.dark table td,
+        body.dark .modern-table td,
+        body.dark .styled-table td    { border-color: #30363d; }
+        body.dark table tr:hover,
+        body.dark .modern-table tr:hover,
+        body.dark .styled-table tr:hover { background: #1f2937; }
+
+        /* Cards */
+        body.dark .card               { background: #161b22; color: #e6edf3; border-color: #30363d; }
+        body.dark .card p             { color: #8b949e; }
+
+        /* Forms */
+        body.dark .form-container     { background: #161b22; color: #e6edf3; }
+        body.dark .form-container h2,
+        body.dark .form-container h3  { color: #7dd3a8; }
+        body.dark .input-group label  { color: #7dd3a8; }
         body.dark input,
         body.dark select,
-        body.dark textarea              { background: #1f2937; color: #e6edf3; border-color: #374151; }
+        body.dark textarea            { background: #1f2937; color: #e6edf3; border-color: #374151; }
+        body.dark input:focus,
+        body.dark select:focus,
+        body.dark textarea:focus      { border-color: #2e8b57; box-shadow: 0 0 0 3px rgba(46,139,87,0.2); }
+
+        /* Page headings */
+        body.dark .page-header h2,
+        body.dark .header h2          { color: #7dd3a8; }
+
+        /* Messages */
+        body.dark .msg.success        { background: #0f2d1e; color: #6ee7b7; border-left: 4px solid #2e8b57; }
+        body.dark .msg.error          { background: #2d0f0f; color: #fca5a5; border-left: 4px solid #ef4444; }
+
+        /* Modal */
+        body.dark .modal-content      { background: #161b22; color: #e6edf3; }
+        body.dark .modal-content h3   { color: #7dd3a8; }
+        body.dark .close              { color: #8b949e; }
+        body.dark .close:hover        { color: #e6edf3; }
+
+        /* Misc */
+        body.dark .page-header,
+        body.dark .header             { border-color: #30363d; }
 
         /* ══════════════════════════════════════════════════════════
            SIDEBAR
