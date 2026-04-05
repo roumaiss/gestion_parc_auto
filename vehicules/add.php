@@ -4,36 +4,6 @@ include "../dashboard/header.php";
 include "../dashboard/sidebar.php";
 ?>
 
-<!-- PAGE ACTIONS (Home + Dark Mode) -->
-<div class="page-actions">
-    <a href="../dashboard/index.php" class="home-btn">🏠 Home</a>
-  
-</div>
-
-<style>
-.page-actions {
-    margin-left: 260px; /* matches sidebar width */
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-    width: calc(100% - 260px);
-    padding: 0 20px;
-}
-
-.home-btn {
-    background: #1b5e42;
-    padding: 10px 18px;
-    color: #fff;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.2s;
-}
-.home-btn:hover {
-    background: #134a32;
-}
-</style>
-
 <?php
 // DB connection
 require_once "../config/db.php";
@@ -71,13 +41,12 @@ if (!preg_match('/^[0-9\-]+$/', $matricule)) {
 }
 ?>
 
-<link rel="stylesheet" href="../assets/forms.css">
+<div class="content">
 <?php if(isset($_GET['error']) && $_GET['error'] == 'invalid_matricule'): ?>
-    <div class="msg error">
+    <div class="msg error" style="max-width:480px;margin:0 auto 15px;">
         Matricule must contain only numbers and "-" ❌
     </div>
 <?php endif; ?>
-
 
 <div class="form-container">
     <h2>Ajouter Vehicle 🚗</h2>
@@ -136,6 +105,7 @@ if (!preg_match('/^[0-9\-]+$/', $matricule)) {
 
         <button type="submit" class="submit-btn">ajouter Vehicle</button>
     </form>
+</div>
 </div>
 
 <?php include "../dashboard/footer.php"; ?>

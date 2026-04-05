@@ -3,12 +3,9 @@ ob_start();
 
 include('../config/database.php');
 
-// get employees
 $employes = $pdo->query("SELECT * FROM employe")->fetchAll();
 
-/* HANDLE FORM */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     $id_employe = $_POST['id_employe'];
     $date       = $_POST['date_delivrance'];
     $reference  = $_POST['reference'];
@@ -38,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-/* ✅ INCLUDE ONLY ONCE */
 include('../dashboard/header.php');
 include('../dashboard/sidebar.php');
 ?>
@@ -50,32 +46,38 @@ include('../dashboard/sidebar.php');
 
     <form method="POST">
 
-        <label>Employé</label>
-        <select name="id_employe" required>
-            <?php foreach($employes as $e): ?>
-                <option value="<?= $e['id_employe'] ?>">
-                    <?= $e['nom'] ?> <?= $e['prenom'] ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
+        <div class="input-group">
+            <label>Employé</label>
+            <select name="id_employe" required>
+                <?php foreach($employes as $e): ?>
+                    <option value="<?= $e['id_employe'] ?>">
+                        <?= htmlspecialchars($e['nom']) ?> <?= htmlspecialchars($e['prenom']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
 
-        <label>Date</label>
-        <input type="date" name="date_delivrance" required>
+        <div class="input-group">
+            <label>Date</label>
+            <input type="date" name="date_delivrance" required>
+        </div>
 
-        <h3 style="margin-top:20px;">📄 Détail carburant</h3>
+        <div class="input-group">
+            <label>Type carburant</label>
+            <select name="reference" required>
+                <option value="" disabled selected>-- Choisir --</option>
+                <option value="Essence">Essence</option>
+                <option value="Gasoil">Gasoil</option>
+                <option value="Gaz">Gaz</option>
+            </select>
+        </div>
 
-        <label>Type carburant</label>
-<select name="reference" required>
-    <option value="" disabled selected>-- Choisir --</option>
-    <option value="Essence">Essence</option>
-    <option value="Gasoil">Gasoil</option>
-    <option value="Gaz">Gaz</option>
-</select>
+        <div class="input-group">
+            <label>Montant (DZD)</label>
+            <input type="number" step="0.01" min="1" name="montant" required>
+        </div>
 
-<label>Montant (DZD)</label>
-<input type="number" step="0.01" min="1" name="montant" required>
-
-        <button type="submit" class="submit-btn">ajouter Carburant</button>
+        <button type="submit" class="submit-btn">Ajouter Carburant</button>
 
     </form>
 

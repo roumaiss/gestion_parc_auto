@@ -198,7 +198,7 @@ $role     = $_SESSION['role'];
         }
 
         .form-container {
-            max-width: 700px;
+            max-width: 480px;
             margin: 20px auto !important;
             padding: 28px;
             border-radius: 12px;
@@ -207,6 +207,39 @@ $role     = $_SESSION['role'];
             box-shadow: 0 4px 16px rgba(0,0,0,0.08);
         }
         .form-container h2 { color: var(--green-dark); margin-bottom: 20px; }
+
+        /* ── FORM INPUTS ────────────────────────────────────────── */
+        .input-group { margin-bottom: 14px; }
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--green-dark);
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            display: block;
+            width: 100%;
+            padding: 9px 12px;
+            border: 2px solid #dcdcdc;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            background: var(--card-bg);
+            color: var(--text);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            box-sizing: border-box;
+        }
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            border-color: var(--green-mid);
+            box-shadow: 0 0 0 3px rgba(46,139,87,0.15);
+            outline: none;
+        }
+        body.dark .input-group label { color: #7dd3a8; }
 
         /* ── CARDS ──────────────────────────────────────────────── */
         .cards {

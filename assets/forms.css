@@ -1,85 +1,29 @@
-body {
-    background: #f4f6f8;
-}
-
-/* Container */
-.form-container {
-    margin-left: 260px;
-    margin-top: 40px;
-    background: white;
-    padding: 30px;
-    width: 600px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    font-family: "Segoe UI", sans-serif;
-}
-
-.form-container h2 {
-    color: #1b5e42;
-    margin-bottom: 20px;
-}
-
 /* Input fields */
 .input-group {
-    margin-bottom: 18px;
+    margin-bottom: 12px;
 }
 
 .input-group label {
     display: block;
     font-weight: 600;
     color: #1b5e42;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
 }
 
 .input-group input,
 .input-group select {
     width: 100%;
-    padding: 12px;
+    padding: 9px 12px;
     border: 2px solid #dcdcdc;
     border-radius: 8px;
-    font-size: 15px;
+    font-size: 14px;
     transition: 0.3s;
+    box-sizing: border-box;
 }
 
 .input-group input:focus,
 .input-group select:focus {
     border-color: #2e8b57;
     box-shadow: 0 0 0 3px rgba(46,139,87,0.15);
-}
-
-/* Button */
-.submit-btn {
-    margin-top: 10px;
-    width: 100%;
-    padding: 14px;
-    background: linear-gradient(to right, #1b5e42, #2e8b57);
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-size: 17px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.submit-btn:hover {
-    background: linear-gradient(to right, #175539, #267d4d);
-    transform: translateY(-2px);
-}
-
-/* Messages */
-.msg {
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    font-weight: 600;
-}
-
-.msg.success {
-    background: #d4edda;
-    color: #155724;
-}
-
-.msg.error {
-    background: #f8d7da;
-    color: #721c24;
+    outline: none;
 }
