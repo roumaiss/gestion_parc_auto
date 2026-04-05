@@ -1,0 +1,64 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    /* Deep Forest Green Background */
+    background-color: #1a3c2a; 
+    background-image: url("../img/mobil.png");
+    background-repeat: no-repeat;
+    background-position: center 50px; /* Moves the logo 50px from the top */
+    background-size: 400px; /* Adjust size to fit your logo better */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.login-box {
+    /* Subtle Glassmorphism */
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    width: 350px;
+    padding: 40px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    text-align: center;
+    color: white;
+}
+
+.logo {
+    width: 80px;
+    margin-bottom: 15px;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+     background: white;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 12px;
+    background: #6cc24a; /* Vibrant Mobilis Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.login-box button:hover {
+    background: #58a03c; /* Slightly darker on hover */
+}

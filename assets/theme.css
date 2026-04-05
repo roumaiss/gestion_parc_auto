@@ -1,0 +1,82 @@
+/* Top bar */
+.topbar {
+    position: fixed;
+    right: 20px;
+    top: 15px;
+    z-index: 999;
+}
+
+.theme-btn {
+    background: #1b5e42;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.theme-btn:hover {
+    background: #267d4d;
+}
+
+/* DARK MODE ROOT */
+body.dark {
+    background: #121212 !important;
+    color: #f1f1f1 !important;
+}
+
+/* DARK MODE sidebar */
+body.dark .sidebar {
+    background: linear-gradient(180deg, #0f3023, #174c37);
+}
+
+body.dark .sidebar a {
+    color: #dcdcdc;
+}
+
+/* DARK MODE forms */
+body.dark .form-container {
+    background: #1d1d1d;
+    color: #fff;
+}
+
+body.dark input,
+body.dark select {
+    background: #292929;
+    color: #fff;
+    border-color: #444;
+}
+
+/* DARK MODE cards */
+body.dark .card {
+    background: #1b1b1b;
+    color: #fff;
+    border: 1px solid #333;
+}
+
+/* DARK MODE tables */
+body.dark table {
+    background: #1d1d1d;
+    color: #fff;
+}
+
+body.dark th, 
+body.dark td {
+    border-color: #333;
+}
+.footer {
+    margin-top: 40px;
+    padding: 20px;
+    text-align: center;
+    color: #555;
+    font-size: 14px;
+    border-top: 1px solid #ddd;
+}
+
+body.dark .footer {
+    color: #ccc;
+    border-color: #333;
+}
+
