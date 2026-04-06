@@ -1,5 +1,5 @@
 <?php
-require_once "../config/database.php";
+require_once "../config/db.php";
 
 $stmt = $pdo->query("
     SELECT i.num_incident, v.marque, v.matricule, i.description, i.date_incident, i.gravite

@@ -1,20 +1,21 @@
 <?php
-include('../config/database.php');
+require_once "../config/db.php";
 
-$id = $_GET['id'];
+$id = intval($_GET['id'] ?? 0);
+if (!$id) {
+    header("Location: list_chauffeurs.php?error=invalid");
+    exit;
+}
 
-// Check if used in carburant
 $check = $pdo->prepare("SELECT COUNT(*) FROM carburant WHERE id_employe = ?");
 $check->execute([$id]);
 
 if ($check->fetchColumn() > 0) {
-    echo "<script>alert('❌ Cannot delete: employee used in carburant'); window.location='list_chauffeurs.php';</script>";
+    header("Location: list_chauffeurs.php?error=used");
     exit;
 }
 
-// Delete
-$stmt = $pdo->prepare("DELETE FROM employe WHERE id_employe = ?");
-$stmt->execute([$id]);
+$pdo->prepare("DELETE FROM employe WHERE id_employe = ?")->execute([$id]);
 
 header("Location: list_chauffeurs.php?success=deleted");
 exit;

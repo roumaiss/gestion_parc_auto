@@ -25,7 +25,11 @@ $employees = $stmt->fetchAll();
         <?php endif; ?>
     <?php endif; ?>
     <?php if(isset($_GET['error'])): ?>
-        <div class="msg error">❌ Impossible de supprimer : chauffeur utilisé dans d'autres enregistrements.</div>
+        <?php if($_GET['error'] == 'used'): ?>
+            <div class="msg error">❌ Impossible de supprimer : ce chauffeur est lié à des enregistrements carburant.</div>
+        <?php else: ?>
+            <div class="msg error">❌ Une erreur est survenue.</div>
+        <?php endif; ?>
     <?php endif; ?>
 
     <table>

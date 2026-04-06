@@ -1,10 +1,6 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 session_start();
 
-// 🔒 PROTECT PAGE
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../dashboard/index.php");
     exit;
@@ -16,41 +12,33 @@ include('../dashboard/sidebar.php');
 ?>
 
 <div class="content">
-<div class="mission-container">
 
-    <div class="header">
-        <h2>🔐 Roles System</h2>
+    <div class="page-header">
+        <h2>Système de Rôles</h2>
     </div>
 
     <table>
         <thead>
             <tr>
-                <th>Role</th>
+                <th>Rôle</th>
                 <th>Description</th>
-                <th>Access</th>
+                <th>Accès</th>
             </tr>
         </thead>
-
         <tbody>
-
             <tr>
-                <td><span class="badge done">Admin</span></td>
-                <td>Full access to system</td>
-                <td>All modules</td>
+                <td><span class="badge admin">Admin</span></td>
+                <td>Accès complet au système</td>
+                <td>Tous les modules + Administration (utilisateurs, wilayas, rôles)</td>
             </tr>
-
             <tr>
-                <td><span class="badge active">User</span></td>
-                <td>Limited access</td>
-                <td>Missions, Vehicles, Maintenance, carburant, incidents</td>
+                <td><span class="badge user">User</span></td>
+                <td>Accès limité</td>
+                <td>Missions, Véhicules, Chauffeurs, Maintenance, Carburant, Incidents</td>
             </tr>
-
-           
-
         </tbody>
     </table>
 
-</div>
 </div>
 
 <?php include('../dashboard/footer.php'); ?>

@@ -1,17 +1,12 @@
 <?php
-// DB first, before any HTML output
 require_once "../config/db.php";
 include "../dashboard/header.php";
 include "../dashboard/sidebar.php";
 
 $success = "";
 $error   = "";
-$debug   = [];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
-    $debug[] = "POST received";
-    $debug[] = "POST data: " . json_encode($_POST);
 
     $matricule   = trim($_POST['matricule']   ?? '');
     $marque      = trim($_POST["marque"]      ?? '');
@@ -21,44 +16,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $etat        = trim($_POST["etat"]        ?? '');
     $created_by  = $_SESSION["user_id"] ?? null;
 
-    $debug[] = "created_by (user_id from session): " . var_export($created_by, true);
-
-    // Validation
     if (empty($matricule) || empty($marque) || empty($modele) || empty($kilometrage) || empty($date_achat)) {
         $error = "❌ Tous les champs sont obligatoires.";
-        $debug[] = "Validation failed: empty fields";
     } elseif (!preg_match('/^[0-9\-]+$/', $matricule)) {
         $error = "❌ Matricule doit contenir uniquement des chiffres et '-'.";
-        $debug[] = "Validation failed: invalid matricule";
     } elseif ($created_by === null) {
         $error = "❌ Session expirée. Veuillez vous reconnecter.";
-        $debug[] = "Validation failed: no user_id in session";
     } else {
         try {
-            $debug[] = "Attempting DB insert...";
-
             $sql = $pdo->prepare("
                 INSERT INTO vehicule (matricule, marque, modele, kilometrage, date_achat, etat, created_by)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
             ");
-
-            $result = $sql->execute([$matricule, $marque, $modele, $kilometrage, $date_achat, $etat, $created_by]);
-
-            $debug[] = "Execute result: " . var_export($result, true);
-            $debug[] = "Rows affected: " . $sql->rowCount();
-
-            if ($result && $sql->rowCount() > 0) {
-                $success = "✅ Véhicule ajouté avec succès!";
-                $debug[] = "SUCCESS — vehicle inserted";
-            } else {
-                $error = "❌ Aucune ligne insérée. Vérifiez les données.";
-                $debug[] = "FAILED — no rows inserted";
-            }
-
+            $sql->execute([$matricule, $marque, $modele, $kilometrage, $date_achat, $etat, $created_by]);
+            $success = "✅ Véhicule ajouté avec succès!";
         } catch (PDOException $e) {
             $error = "❌ Erreur base de données: " . $e->getMessage();
-            $debug[] = "PDOException: " . $e->getMessage();
-            $debug[] = "SQL state: " . $e->getCode();
         }
     }
 }
@@ -76,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="msg error"><?= $error ?></div>
     <?php endif; ?>
 
-    <form method="POST" id="addVehicleForm">
+    <form method="POST">
 
         <div class="input-group">
             <label>Matricule</label>
@@ -122,29 +95,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 </div>
 </div>
-
-<!-- DEBUG CONSOLE LOG -->
-<script>
-const debugLogs = <?= json_encode($debug) ?>;
-if (debugLogs.length > 0) {
-    console.group('%c[Add Véhicule — Debug]', 'color:#2e8b57;font-weight:bold;font-size:13px;');
-    debugLogs.forEach((line, i) => {
-        if (line.includes('SUCCESS'))       console.log('%c' + line, 'color:green;font-weight:bold;');
-        else if (line.includes('FAILED') || line.includes('Exception') || line.includes('failed'))
-                                            console.error(line);
-        else                                console.log('%c[' + i + '] ' + line, 'color:#555;');
-    });
-    console.groupEnd();
-}
-
-// Form submit log
-document.getElementById('addVehicleForm').addEventListener('submit', function(e) {
-    const data = {};
-    new FormData(this).forEach((v, k) => data[k] = v);
-    console.group('%c[Add Véhicule — Form Submit]', 'color:#1565c0;font-weight:bold;font-size:13px;');
-    console.log('Fields:', data);
-    console.groupEnd();
-});
-</script>
 
 <?php include "../dashboard/footer.php"; ?>
