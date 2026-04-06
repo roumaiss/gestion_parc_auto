@@ -1,75 +1,67 @@
 <?php
 session_start();
-include('../config/database.php');
 
-// 🔒 PROTECT (admin only)
-if ($_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../dashboard/index.php");
     exit;
 }
 
+include('../config/database.php');
 include('../dashboard/header.php');
 include('../dashboard/sidebar.php');
 
-// GET ID (FIXED)
 $id = $_GET['id'] ?? null;
-
 if (!$id) {
-    die("User ID missing");
+    header("Location: users.php");
+    exit;
 }
 
-// FETCH USER (FIXED COLUMN NAME)
 $stmt = $pdo->prepare("SELECT * FROM app_user WHERE id_app_user = ?");
 $stmt->execute([$id]);
 $user = $stmt->fetch();
 
 if (!$user) {
-    die("User not found");
+    header("Location: users.php");
+    exit;
 }
 
-// UPDATE USER
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     $username = $_POST['username'];
-    $role = $_POST['role'];
+    $role     = $_POST['role'];
 
-    $update = $pdo->prepare("
-        UPDATE app_user 
-        SET username = ?, role = ? 
-        WHERE id_app_user = ?
-    ");
+    $pdo->prepare("UPDATE app_user SET username=?, role=? WHERE id_app_user=?")
+        ->execute([$username, $role, $id]);
 
-    $update->execute([$username, $role, $id]);
-
-    header("Location: users.php");
+    header("Location: users.php?success=updated");
     exit;
 }
 ?>
 
 <div class="content">
+<div class="form-container">
 
-    <div class="form-container">
+    <h2>Modifier Utilisateur ✏️</h2>
 
-        <h2>✏️ Edit User</h2>
+    <form method="POST">
 
-        <form method="POST">
-
+        <div class="input-group">
             <label>Username</label>
-            <input type="text" name="username"
-                   value="<?= htmlspecialchars($user['username']) ?>" required>
+            <input type="text" name="username" value="<?= htmlspecialchars($user['username']) ?>" required>
+        </div>
 
-            <label>Role</label>
+        <div class="input-group">
+            <label>Rôle</label>
             <select name="role">
                 <option value="admin" <?= $user['role']=='admin'?'selected':'' ?>>Admin</option>
-                <option value="user" <?= $user['role']=='user'?'selected':'' ?>>User</option>
+                <option value="user"  <?= $user['role']=='user' ?'selected':'' ?>>User</option>
             </select>
+        </div>
 
-            <button type="submit" class="btn-submit">Update User</button>
+        <button type="submit" class="submit-btn">Enregistrer les modifications</button>
 
-        </form>
+    </form>
 
-    </div>
-
+</div>
 </div>
 
 <?php include('../dashboard/footer.php'); ?>
