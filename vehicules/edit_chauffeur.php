@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pdo->prepare("UPDATE employe SET nom=?, prenom=?, fonction=? WHERE id_employe=?")
         ->execute([$nom, $prenom, $fonction, $id]);
 
-    header("Location: list_chauffeurs.php");
+    header("Location: list_chauffeurs.php?success=updated");
     exit;
 }
 ?>

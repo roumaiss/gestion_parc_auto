@@ -16,5 +16,5 @@ if ($check->fetchColumn() > 0) {
 $stmt = $pdo->prepare("DELETE FROM employe WHERE id_employe = ?");
 $stmt->execute([$id]);
 
-header("Location: list_chauffeurs.php");
+header("Location: list_chauffeurs.php?success=deleted");
 exit;

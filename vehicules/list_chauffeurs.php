@@ -13,6 +13,17 @@ $employees = $stmt->fetchAll();
         <h2>Liste des Chauffeurs</h2>
     </div>
 
+    <?php if(isset($_GET['success'])): ?>
+        <?php if($_GET['success'] == 'deleted'): ?>
+            <div class="msg success">✅ Chauffeur supprimé avec succès.</div>
+        <?php elseif($_GET['success'] == 'updated'): ?>
+            <div class="msg success">✅ Chauffeur modifié avec succès.</div>
+        <?php endif; ?>
+    <?php endif; ?>
+    <?php if(isset($_GET['error'])): ?>
+        <div class="msg error">❌ Impossible de supprimer : chauffeur utilisé dans d'autres enregistrements.</div>
+    <?php endif; ?>
+
     <table>
         <thead>
             <tr>

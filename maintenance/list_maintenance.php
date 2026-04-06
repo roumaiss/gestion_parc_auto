@@ -50,6 +50,16 @@ $maintenances = $stmt->fetchAll();
         <button class="btn-add" onclick="openModal()">+ Ajouter</button>
     </div>
 
+    <?php if(isset($_GET['success'])): ?>
+        <?php if($_GET['success'] == 'deleted'): ?>
+            <div class="msg success">✅ Entretien supprimé avec succès.</div>
+        <?php elseif($_GET['success'] == 'updated'): ?>
+            <div class="msg success">✅ Entretien modifié avec succès.</div>
+        <?php elseif($_GET['success'] == 'added'): ?>
+            <div class="msg success">✅ Entretien ajouté avec succès.</div>
+        <?php endif; ?>
+    <?php endif; ?>
+
     <table>
         <thead>
             <tr>

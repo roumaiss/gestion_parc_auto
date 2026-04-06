@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pdo->prepare("UPDATE entretien SET type=?, date_entretien=?, cout=?, kilometrage=? WHERE num_entretien=?")
         ->execute([$type, $date, $cout, $kilometrage, $id]);
 
-    header("Location: list_maintenance.php");
+    header("Location: list_maintenance.php?success=updated");
     exit;
 }
 ?>

@@ -35,11 +35,17 @@ $missions = $stmt->fetchAll();
         <a href="add_mission.php" class="btn-add">+ Nouvelle Mission</a>
     </div>
 
+    <?php if(isset($_GET['success'])): ?>
+        <?php if($_GET['success'] == 'finished'): ?>
+            <div class="msg success">✅ Mission terminée avec succès.</div>
+        <?php elseif($_GET['success'] == 'deleted'): ?>
+            <div class="msg success">✅ Mission supprimée avec succès.</div>
+        <?php elseif($_GET['success'] == 'added' || $_GET['success'] == 'created'): ?>
+            <div class="msg success">✅ Mission créée avec succès.</div>
+        <?php endif; ?>
+    <?php endif; ?>
     <?php if(isset($_GET['error']) && $_GET['error'] == 'km_invalid'): ?>
         <div class="msg error">❌ Km retour doit être supérieur au kilométrage actuel du véhicule.</div>
-    <?php endif; ?>
-    <?php if(isset($_GET['success']) && $_GET['success'] == 'finished'): ?>
-        <div class="msg success">✅ Mission terminée avec succès.</div>
     <?php endif; ?>
 
     <!-- FILTER -->

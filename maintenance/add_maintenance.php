@@ -24,5 +24,5 @@ $stmt->execute([
     $created_by
 ]);
 
-header("Location: list_maintenance.php");
+header("Location: list_maintenance.php?success=added");
 exit;
