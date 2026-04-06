@@ -52,9 +52,8 @@ $carburants = $stmt->fetchAll();
                     <td><?= htmlspecialchars($c['nom']) ?> <?= htmlspecialchars($c['prenom']) ?></td>
                     <td>
                         <a href="edit_carburant.php?id=<?= $c['num_detail'] ?>" class="btn-edit">✏ Modifier</a>
-                        <?php $msg = "Supprimer l'entrée carburant " . htmlspecialchars($c['reference'], ENT_QUOTES) . " du " . $c['date_delivrance'] . " ?"; ?>
                         <a href="#" class="btn-delete"
-                           onclick="openDeleteModal('delete_carburant.php?id=<?= $c['num_detail'] ?>', '<?= $msg ?>')">🗑 Supprimer</a>
+                           onclick="openDeleteModal('delete_carburant.php?id=<?= $c['num_detail'] ?>', 'Supprimer ce carburant ?')">🗑 Supprimer</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>

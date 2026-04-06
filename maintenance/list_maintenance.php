@@ -47,7 +47,7 @@ $maintenances = $stmt->fetchAll();
 
     <div class="page-header">
         <h2>Maintenance</h2>
-        <button class="btn-add" onclick="openModal()">+ Ajouter</button>
+        <button class="btn-add" onclick="openAddModal()">+ Ajouter</button>
     </div>
 
     <?php if(isset($_GET['success'])): ?>
@@ -85,9 +85,8 @@ $maintenances = $stmt->fetchAll();
                     <td><?= number_format($m['kilometrage']) ?> km</td>
                     <td>
                         <a href="edit_maintenance.php?id=<?= $m['num_entretien'] ?>" class="btn-edit">✏ Modifier</a>
-                        <?php $msg = "Supprimer l'entretien " . htmlspecialchars($m['type'], ENT_QUOTES) . " du " . $m['date_entretien'] . " ?"; ?>
                         <a href="#" class="btn-delete"
-                           onclick="openDeleteModal('delete_maintenance.php?id=<?= $m['num_entretien'] ?>', '<?= $msg ?>')">🗑 Supprimer</a>
+                           onclick="openDeleteModal('delete_maintenance.php?id=<?= $m['num_entretien'] ?>', 'Supprimer cet entretien ?')">🗑 Supprimer</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
@@ -100,9 +99,9 @@ $maintenances = $stmt->fetchAll();
 </div>
 
 <!-- MODAL -->
-<div id="modal" class="modal">
+<div id="addModal" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
+        <span class="close" onclick="closeAddModal()">&times;</span>
         <h3>Ajouter un Entretien</h3>
         <form method="POST" action="add_maintenance.php">
 
@@ -145,10 +144,10 @@ $maintenances = $stmt->fetchAll();
 </div>
 
 <script>
-function openModal()  { document.getElementById("modal").style.display = "flex"; }
-function closeModal() { document.getElementById("modal").style.display = "none"; }
+function openAddModal()  { document.getElementById("addModal").style.display = "flex"; }
+function closeAddModal() { document.getElementById("addModal").style.display = "none"; }
 window.addEventListener('click', function(e) {
-    if (e.target === document.getElementById('modal')) closeModal();
+    if (e.target === document.getElementById('addModal')) closeAddModal();
 });
 </script>
 
