@@ -32,9 +32,9 @@ $employees = $stmt->fetchAll();
                 <td><span class="badge <?= $e['fonction'] === 'Chauffeur' ? 'done' : 'warning' ?>"><?= htmlspecialchars($e['fonction']) ?></span></td>
                 <td>
                     <a href="edit_chauffeur.php?id=<?= $e['id_employe'] ?>" class="btn-edit">✏ Modifier</a>
-                    <a href="delete_chauffeur.php?id=<?= $e['id_employe'] ?>"
-                       class="btn-delete"
-                       onclick="return confirm('Supprimer cet employé ?')">🗑 Supprimer</a>
+                    <?php $msg = "Supprimer " . htmlspecialchars($e['nom'].' '.$e['prenom'], ENT_QUOTES) . " ?"; ?>
+                    <a href="#" class="btn-delete"
+                       onclick="openDeleteModal('delete_chauffeur.php?id=<?= $e['id_employe'] ?>', '<?= $msg ?>')">🗑 Supprimer</a>
                 </td>
             </tr>
             <?php endforeach; ?>

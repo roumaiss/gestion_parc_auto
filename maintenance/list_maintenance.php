@@ -75,9 +75,9 @@ $maintenances = $stmt->fetchAll();
                     <td><?= number_format($m['kilometrage']) ?> km</td>
                     <td>
                         <a href="edit_maintenance.php?id=<?= $m['num_entretien'] ?>" class="btn-edit">✏ Modifier</a>
-                        <a href="delete_maintenance.php?id=<?= $m['num_entretien'] ?>"
-                           class="btn-delete"
-                           onclick="return confirm('Supprimer cet entretien ?')">🗑 Supprimer</a>
+                        <?php $msg = "Supprimer l'entretien " . htmlspecialchars($m['type'], ENT_QUOTES) . " du " . $m['date_entretien'] . " ?"; ?>
+                        <a href="#" class="btn-delete"
+                           onclick="openDeleteModal('delete_maintenance.php?id=<?= $m['num_entretien'] ?>', '<?= $msg ?>')">🗑 Supprimer</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>

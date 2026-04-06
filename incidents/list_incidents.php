@@ -61,9 +61,9 @@ $incidents = $stmt->fetchAll();
                     <td><span class="badge <?= $badgeClass ?>"><?= htmlspecialchars($row['gravite']) ?></span></td>
                     <td>
                         <a href="edit_incident.php?id=<?= $row['num_incident'] ?>" class="btn-edit">✏ Modifier</a>
-                        <a href="delete_incident.php?id=<?= $row['num_incident'] ?>"
-                           class="btn-delete"
-                           onclick="return confirm('Supprimer cet incident ?')">🗑 Supprimer</a>
+                        <?php $msg = "Supprimer l'incident #" . $row['num_incident'] . " du " . $row['date_incident'] . " ?"; ?>
+                        <a href="#" class="btn-delete"
+                           onclick="openDeleteModal('delete_incident.php?id=<?= $row['num_incident'] ?>', '<?= $msg ?>')">🗑 Supprimer</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>

@@ -87,9 +87,9 @@ $missions = $stmt->fetchAll();
                         <?php if(empty($row['date_retour']) || $row['date_retour'] == '0000-00-00'): ?>
                             <button onclick="finishMission(<?= $row['num_mission'] ?>)" class="btn-edit">Terminer</button>
                         <?php endif; ?>
-                        <a href="delete_mission.php?id=<?= $row['num_mission'] ?>"
-                           class="btn-delete"
-                           onclick="return confirm('Supprimer cette mission ?')">🗑 Supprimer</a>
+                        <?php $msg = "Supprimer la mission #" . $row['num_mission'] . " (" . htmlspecialchars($row['marque'], ENT_QUOTES) . ") ?"; ?>
+                        <a href="#" class="btn-delete"
+                           onclick="openDeleteModal('delete_mission.php?id=<?= $row['num_mission'] ?>', '<?= $msg ?>')">🗑 Supprimer</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>

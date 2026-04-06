@@ -57,9 +57,9 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td><span class="badge <?= $badgeClass ?>"><?= $v['etat'] ?></span></td>
                 <td>
                     <a href="edit.php?id=<?= $v['id_vehicule'] ?>" class="btn-edit">✏ Modifier</a>
-                    <a href="delete.php?id=<?= $v['id_vehicule'] ?>"
-                       class="btn-delete"
-                       onclick="return confirm('Supprimer ce véhicule ?')">🗑 Supprimer</a>
+                    <?php $msg = "Supprimer le véhicule " . htmlspecialchars($v['marque'].' '.$v['matricule'], ENT_QUOTES) . " ?"; ?>
+                    <a href="#" class="btn-delete"
+                       onclick="openDeleteModal('delete.php?id=<?= $v['id_vehicule'] ?>', '<?= $msg ?>')">🗑 Supprimer</a>
                 </td>
             </tr>
             <?php endforeach; ?>

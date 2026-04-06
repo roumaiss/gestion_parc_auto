@@ -59,9 +59,9 @@ $users = $stmt->fetchAll();
                     <td>
                         <a href="edit_user.php?id=<?= $u['id_app_user'] ?>" class="btn-edit">✏ Modifier</a>
                         <?php if($u['id_app_user'] != $_SESSION['user_id']): ?>
-                            <a href="delete_user.php?id=<?= $u['id_app_user'] ?>"
-                               class="btn-delete"
-                               onclick="return confirm('Supprimer cet utilisateur ?')">🗑 Supprimer</a>
+                            <?php $msg = "Supprimer l'utilisateur " . htmlspecialchars($u['username'], ENT_QUOTES) . " ?"; ?>
+                            <a href="#" class="btn-delete"
+                               onclick="openDeleteModal('delete_user.php?id=<?= $u['id_app_user'] ?>', '<?= $msg ?>')">🗑 Supprimer</a>
                         <?php else: ?>
                             <span class="badge done">Vous</span>
                         <?php endif; ?>
