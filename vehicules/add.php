@@ -1,75 +1,89 @@
 <?php
-// HEADER + SIDEBAR
+// DB first, before any HTML output
+require_once "../config/db.php";
 include "../dashboard/header.php";
 include "../dashboard/sidebar.php";
-?>
 
-<?php
-// DB connection
-require_once "../config/db.php";
-
-// Form handler
 $success = "";
 $error   = "";
+$debug   = [];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $matricule = $_POST['matricule'];
+    $debug[] = "POST received";
+    $debug[] = "POST data: " . json_encode($_POST);
 
-if (!preg_match('/^[0-9\-]+$/', $matricule)) {
-    header("Location: add_vehicle.php?error=invalid_matricule");
-    exit;
-}
-    $marque      = $_POST["marque"];
-    $modele      = $_POST["modele"];
-    $kilometrage = $_POST["kilometrage"];
-    $date_achat  = $_POST["date_achat"];
-    $etat        = $_POST["etat"];
-    $created_by  = $_SESSION["user_id"];
+    $matricule   = trim($_POST['matricule']   ?? '');
+    $marque      = trim($_POST["marque"]      ?? '');
+    $modele      = trim($_POST["modele"]      ?? '');
+    $kilometrage = trim($_POST["kilometrage"] ?? '');
+    $date_achat  = trim($_POST["date_achat"]  ?? '');
+    $etat        = trim($_POST["etat"]        ?? '');
+    $created_by  = $_SESSION["user_id"] ?? null;
 
-    $sql = $pdo->prepare("
-        INSERT INTO vehicule
-        (matricule, marque, modele, kilometrage, date_achat, etat, created_by)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-    ");
+    $debug[] = "created_by (user_id from session): " . var_export($created_by, true);
 
-    if ($sql->execute([$matricule, $marque, $modele, $kilometrage, $date_achat, $etat, $created_by])) {
-        $success = "Vehicle added successfully!";
+    // Validation
+    if (empty($matricule) || empty($marque) || empty($modele) || empty($kilometrage) || empty($date_achat)) {
+        $error = "❌ Tous les champs sont obligatoires.";
+        $debug[] = "Validation failed: empty fields";
+    } elseif (!preg_match('/^[0-9\-]+$/', $matricule)) {
+        $error = "❌ Matricule doit contenir uniquement des chiffres et '-'.";
+        $debug[] = "Validation failed: invalid matricule";
+    } elseif ($created_by === null) {
+        $error = "❌ Session expirée. Veuillez vous reconnecter.";
+        $debug[] = "Validation failed: no user_id in session";
     } else {
-        $error = "❌ Error: Could not add vehicle.";
+        try {
+            $debug[] = "Attempting DB insert...";
+
+            $sql = $pdo->prepare("
+                INSERT INTO vehicule (matricule, marque, modele, kilometrage, date_achat, etat, created_by)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            ");
+
+            $result = $sql->execute([$matricule, $marque, $modele, $kilometrage, $date_achat, $etat, $created_by]);
+
+            $debug[] = "Execute result: " . var_export($result, true);
+            $debug[] = "Rows affected: " . $sql->rowCount();
+
+            if ($result && $sql->rowCount() > 0) {
+                $success = "✅ Véhicule ajouté avec succès!";
+                $debug[] = "SUCCESS — vehicle inserted";
+            } else {
+                $error = "❌ Aucune ligne insérée. Vérifiez les données.";
+                $debug[] = "FAILED — no rows inserted";
+            }
+
+        } catch (PDOException $e) {
+            $error = "❌ Erreur base de données: " . $e->getMessage();
+            $debug[] = "PDOException: " . $e->getMessage();
+            $debug[] = "SQL state: " . $e->getCode();
+        }
     }
 }
 ?>
 
 <div class="content">
-<?php if(isset($_GET['error']) && $_GET['error'] == 'invalid_matricule'): ?>
-    <div class="msg error" style="max-width:480px;margin:0 auto 15px;">
-        Matricule must contain only numbers and "-" ❌
-    </div>
-<?php endif; ?>
-
 <div class="form-container">
-    <h2>Ajouter Vehicle 🚗</h2>
-    
+
+    <h2>Ajouter Véhicule 🚗</h2>
+
     <?php if (!empty($success)): ?>
         <div class="msg success"><?= $success ?></div>
     <?php endif; ?>
-
     <?php if (!empty($error)): ?>
         <div class="msg error"><?= $error ?></div>
     <?php endif; ?>
 
-    <form method="POST">
+    <form method="POST" id="addVehicleForm">
+
         <div class="input-group">
             <label>Matricule</label>
-           <input 
-    type="text" 
-    name="matricule"
-    pattern="[0-9\-]+"
-    oninput="this.value = this.value.replace(/[^0-9-]/g, '')"
-    title="Only numbers and '-' allowed"
-    required
->
+            <input type="text" name="matricule"
+                   oninput="this.value = this.value.replace(/[^0-9-]/g, '')"
+                   title="Uniquement des chiffres et '-'"
+                   required>
         </div>
 
         <div class="input-group">
@@ -84,7 +98,7 @@ if (!preg_match('/^[0-9\-]+$/', $matricule)) {
 
         <div class="input-group">
             <label>Kilométrage</label>
-            <input type="number" name="kilometrage" required>
+            <input type="number" name="kilometrage" min="0" required>
         </div>
 
         <div class="input-group">
@@ -103,9 +117,34 @@ if (!preg_match('/^[0-9\-]+$/', $matricule)) {
             </select>
         </div>
 
-        <button type="submit" class="submit-btn">ajouter Vehicle</button>
+        <button type="submit" class="submit-btn">Ajouter Véhicule</button>
     </form>
+
 </div>
 </div>
+
+<!-- DEBUG CONSOLE LOG -->
+<script>
+const debugLogs = <?= json_encode($debug) ?>;
+if (debugLogs.length > 0) {
+    console.group('%c[Add Véhicule — Debug]', 'color:#2e8b57;font-weight:bold;font-size:13px;');
+    debugLogs.forEach((line, i) => {
+        if (line.includes('SUCCESS'))       console.log('%c' + line, 'color:green;font-weight:bold;');
+        else if (line.includes('FAILED') || line.includes('Exception') || line.includes('failed'))
+                                            console.error(line);
+        else                                console.log('%c[' + i + '] ' + line, 'color:#555;');
+    });
+    console.groupEnd();
+}
+
+// Form submit log
+document.getElementById('addVehicleForm').addEventListener('submit', function(e) {
+    const data = {};
+    new FormData(this).forEach((v, k) => data[k] = v);
+    console.group('%c[Add Véhicule — Form Submit]', 'color:#1565c0;font-weight:bold;font-size:13px;');
+    console.log('Fields:', data);
+    console.groupEnd();
+});
+</script>
 
 <?php include "../dashboard/footer.php"; ?>
