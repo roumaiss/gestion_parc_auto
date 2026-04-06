@@ -34,6 +34,10 @@ $missions = $stmt->fetchAll();
         <h2>Liste des Missions</h2>
         <a href="add_mission.php" class="btn-add">+ Nouvelle Mission</a>
     </div>
+    <div class="export-bar">
+        <a href="export_missions.php" class="btn-export green"><i class="fas fa-file-excel"></i> Exporter Excel</a>
+        <button onclick="printTable()" class="btn-export"><i class="fas fa-file-pdf"></i> Imprimer / PDF</button>
+    </div>
 
     <?php if(isset($_GET['success'])): ?>
         <?php if($_GET['success'] == 'finished'): ?>

@@ -49,6 +49,10 @@ $maintenances = $stmt->fetchAll();
         <h2>Maintenance</h2>
         <button class="btn-add" onclick="openAddModal()">+ Ajouter</button>
     </div>
+    <div class="export-bar">
+        <a href="export_maintenance.php" class="btn-export green"><i class="fas fa-file-excel"></i> Exporter Excel</a>
+        <button onclick="printTable()" class="btn-export"><i class="fas fa-file-pdf"></i> Imprimer / PDF</button>
+    </div>
 
     <?php if(isset($_GET['success'])): ?>
         <?php if($_GET['success'] == 'deleted'): ?>

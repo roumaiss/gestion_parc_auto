@@ -18,6 +18,10 @@ $incidents = $stmt->fetchAll();
     <div class="page-header">
         <h2>Liste des Incidents</h2>
     </div>
+    <div class="export-bar">
+        <a href="export_incidents.php" class="btn-export green"><i class="fas fa-file-excel"></i> Exporter Excel</a>
+        <button onclick="printTable()" class="btn-export"><i class="fas fa-file-pdf"></i> Imprimer / PDF</button>
+    </div>
 
     <?php if(isset($_GET['success']) && $_GET['success'] == 'deleted'): ?>
         <div class="msg success">✅ Incident supprimé.</div>

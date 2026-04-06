@@ -119,6 +119,39 @@ document.addEventListener("DOMContentLoaded", function () {
 window.addEventListener("pageshow", function (e) {
     if (e.persisted) window.location.reload();
 });
+
+function printTable() {
+    const table = document.querySelector('table');
+    if (!table) return;
+    const title = document.querySelector('.page-header h2, h2')?.innerText || 'Rapport';
+    const win = window.open('', '_blank');
+    win.document.write(`
+        <!DOCTYPE html><html><head>
+        <meta charset="UTF-8">
+        <title>${title}</title>
+        <style>
+            body { font-family: 'Segoe UI', sans-serif; padding: 30px; color: #222; }
+            h2 { color: #1b5e42; margin-bottom: 6px; }
+            p.meta { color: #888; font-size: 13px; margin-bottom: 20px; }
+            table { width: 100%; border-collapse: collapse; font-size: 13px; }
+            th { background: #1b5e42; color: white; padding: 10px 12px; text-align: left; }
+            td { padding: 9px 12px; border-bottom: 1px solid #e5e7eb; }
+            tr:nth-child(even) td { background: #f9fafb; }
+            .no-print { display: none; }
+            @media print {
+                body { padding: 10px; }
+            }
+        </style>
+        </head><body>
+        <h2>${title}</h2>
+        <p class="meta">Exporté le ${new Date().toLocaleDateString('fr-FR', {day:'2-digit',month:'long',year:'numeric'})} — Mobilis Fleet</p>
+        ${table.outerHTML}
+        </body></html>
+    `);
+    win.document.close();
+    win.focus();
+    setTimeout(() => { win.print(); win.close(); }, 400);
+}
 </script>
 
 </body>

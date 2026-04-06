@@ -12,6 +12,10 @@ $employees = $stmt->fetchAll();
     <div class="page-header">
         <h2>Liste des Chauffeurs</h2>
     </div>
+    <div class="export-bar">
+        <a href="export_chauffeurs.php" class="btn-export green"><i class="fas fa-file-excel"></i> Exporter Excel</a>
+        <button onclick="printTable()" class="btn-export"><i class="fas fa-file-pdf"></i> Imprimer / PDF</button>
+    </div>
 
     <?php if(isset($_GET['success'])): ?>
         <?php if($_GET['success'] == 'deleted'): ?>

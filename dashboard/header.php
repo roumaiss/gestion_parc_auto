@@ -324,7 +324,12 @@ $role     = $_SESSION['role'];
         /* ── BUTTONS ────────────────────────────────────────────── */
         .btn-add    { background: #22c55e; color: white; padding: 9px 14px; border-radius: 8px; text-decoration: none; font-weight: 600; border: none; cursor: pointer; }
         .btn-edit   { background: #2196F3; color: white; padding: 6px 10px; border-radius: 5px; text-decoration: none; margin-right: 5px; }
-        .btn-delete { background: #e53935; color: white; padding: 6px 10px; border-radius: 5px; text-decoration: none; }
+        .btn-delete  { background: #e53935; color: white; padding: 6px 10px; border-radius: 5px; text-decoration: none; }
+        .btn-export  { background: #0d6efd; color: white; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600; display:inline-flex; align-items:center; gap:6px; border:none; cursor:pointer; transition:0.2s; }
+        .btn-export:hover { background: #0b5ed7; }
+        .btn-export.green { background: #198754; }
+        .btn-export.green:hover { background: #157347; }
+        .export-bar { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
         .btn-view   { background: #6c5ce7; color: white; padding: 6px 10px; border-radius: 5px; text-decoration: none; margin-right: 5px; }
         .home-btn   { background: var(--green-dark); color: white; padding: 9px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; }
         .btn-add:hover    { background: #16a34a; }
