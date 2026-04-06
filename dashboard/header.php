@@ -349,9 +349,9 @@ $role     = $_SESSION['role'];
         .badge.user   { background: #546e7a; }
 
         /* ── MESSAGES ───────────────────────────────────────────── */
-        .msg { padding: 10px; border-radius: 6px; margin-bottom: 15px; }
-        .msg.success { background: #d4edda; color: #155724; }
-        .msg.error   { background: #f8d7da; color: #721c24; }
+        .msg { padding: 11px 14px; border-radius: 6px; margin-bottom: 15px; font-weight: 500; }
+        .msg.success { background: #d4edda; color: #155724; border-left: 4px solid #28a745; }
+        .msg.error   { background: #f8d7da; color: #721c24; border-left: 4px solid #dc3545; }
 
         /* ── PAGE HEADER ────────────────────────────────────────── */
         .page-header, .header {
